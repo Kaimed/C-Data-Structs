@@ -25,7 +25,7 @@ protected:
 public:
 	Linked_List<T>();
 	Linked_List<T>(T datum);
-	Linked_List<T>(T arr[]);
+	Linked_List<T>(T *arr, size_t arrSize);
 
 	List_Node<T>* get_head();
 	List_Node<T>* get_current();
@@ -66,16 +66,16 @@ Linked_List<T>::Linked_List<T>(T datum)
 }
 
 TEMPLATE
-Linked_List<T>::Linked_List<T>(T arr[])
+Linked_List<T>::Linked_List<T>(T *arr,size_t arrSize)
 {
 	this->head = new List_Node<T>(arr[0]);
 	List_Node<T>* ptr = head;
-	for (int i = 1; i < sizeof(arr)/sizeof(T); i++)
+	for (int i = 1; i < arrSize; i++)
 	{
 		ptr->next = new List_Node<T>(arr[i]);
 		ptr = ptr->next;
 	}
-	this->size = sizeof(arr)/sizeof(T);
+	this->size = arrSize;
 	
 }
 
@@ -91,7 +91,9 @@ TEMPLATE
 bool Linked_List<T>::add_node(T datum)
 {
 	try {
-		if (this->size == 1)
+		if (this->size == 0)
+			this->head = new List_Node<T>(datum);
+		else if (this->size == 1)
 			this->head->next = new List_Node<T>(datum);
 		else
 			this->current->next = new List_Node<T>(datum);
