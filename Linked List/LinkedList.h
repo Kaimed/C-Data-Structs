@@ -1,4 +1,7 @@
 #pragma once
+#ifndef LinkedList_h
+#define LinkedList_h
+#endif
 #include <iostream>
 #define TEMPLATE template <typename T>
 
@@ -20,7 +23,9 @@ protected:
 	size_t size;
 
 public:
+	Linked_List<T>();
 	Linked_List<T>(T datum);
+	Linked_List<T>(T arr[]);
 
 	List_Node<T>* get_head();
 	List_Node<T>* get_current();
@@ -31,6 +36,7 @@ public:
 };
 
 
+//DEFINITIONS
 TEMPLATE
 List_Node<T>::List_Node<T>() {
 	this->data = 0;
@@ -43,13 +49,43 @@ List_Node<T>::List_Node<T>(T datum) {
 	this->next = nullptr;
 }
 
+TEMPLATE
+Linked_List<T>::Linked_List<T>()
+{
+	this->head = new List_Node<T>();
+	this->current = head;
+	this->size = 0;
+}
 
 TEMPLATE
-Linked_List<T>::Linked_List<T>(T datum) {
+Linked_List<T>::Linked_List<T>(T datum)
+{
 	this->head = new List_Node<T>(datum);
 	this->current = head;
 	this->size = 1;
 }
+
+TEMPLATE
+Linked_List<T>::Linked_List<T>(T arr[])
+{
+	this->head = new List_Node<T>(arr[0]);
+	List_Node<T>* ptr = head;
+	for (int i = 1; i < sizeof(arr)/sizeof(T); i++)
+	{
+		ptr->next = new List_Node<T>(arr[i]);
+		ptr = ptr->next;
+	}
+	this->size = sizeof(arr)/sizeof(T);
+	
+}
+
+TEMPLATE
+List_Node<T>* Linked_List<T>::get_head()
+{
+	return this->head;
+}
+
+
 
 TEMPLATE
 bool Linked_List<T>::add_node(T datum)
@@ -60,6 +96,8 @@ bool Linked_List<T>::add_node(T datum)
 		else
 			this->current->next = new List_Node<T>(datum);
 		this->size += 1;
+		this->current = this->current->next;
+		this->current->next = nullptr;
 		return true;
 	}
 
