@@ -33,6 +33,8 @@ public:
 	size_t get_size();
 	void print_list();
 
+	~Linked_List<T>();
+
 };
 
 
@@ -77,6 +79,28 @@ Linked_List<T>::Linked_List<T>(T *arr,size_t arrSize)
 	}
 	this->size = arrSize;
 	
+}
+
+TEMPLATE
+Linked_List<T>::~Linked_List()
+{
+	int i = 0;
+	while (i < this->size)
+	{
+		i++;
+
+		try {
+			List_Node<T>* ptr = this->head;
+			this->head = this->head->next;
+			delete ptr;
+		}
+		catch (...) {
+			std::cout << "Deletion error\n";
+			break;
+		}
+		delete this->current;
+		this->size = 0;
+	}
 }
 
 TEMPLATE

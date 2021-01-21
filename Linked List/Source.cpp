@@ -24,6 +24,7 @@ int main()
 		}
 	}
 	test_list.print_list();
+	test_list.~Linked_List();
 
 	std::string words[3] = { "Kevin","Cole","Corpeny" };
 	Linked_List<std::string> string_list(words[0]);
