@@ -40,5 +40,7 @@ int main()
 		}
 	}
 	string_list.print_list();
+	List_Node<std::string>* found = string_list.find("Kevin");
+	std::cout << found->data<<'\n';
 	return 0;
 }

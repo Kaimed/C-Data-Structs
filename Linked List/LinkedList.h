@@ -26,19 +26,24 @@ public:
 	Linked_List<T>();
 	Linked_List<T>(T datum);
 	Linked_List<T>(T *arr, size_t arrSize);
+	~Linked_List<T>();
 
+	List_Node<T>* find(T target);
 	List_Node<T>* get_head();
 	List_Node<T>* get_current();
+
 	bool add_node(T datum);
 	size_t get_size();
 	void print_list();
 
-	~Linked_List<T>();
-
 };
 
+///////////////
+//DEFINITIONS//
+///////////////
 
-//DEFINITIONS
+
+//CONSTRUCTORS
 TEMPLATE
 List_Node<T>::List_Node<T>() {
 	this->data = 0;
@@ -103,13 +108,24 @@ Linked_List<T>::~Linked_List()
 	}
 }
 
+//GETTERS
 TEMPLATE
 List_Node<T>* Linked_List<T>::get_head()
 {
 	return this->head;
 }
 
+TEMPLATE
+List_Node<T>* Linked_List<T>::get_current()
+{
+	return this->current;
+}
 
+TEMPLATE
+size_t Linked_List<T>::get_size()
+{
+	return this->size;
+}
 
 TEMPLATE
 bool Linked_List<T>::add_node(T datum)
@@ -131,6 +147,22 @@ bool Linked_List<T>::add_node(T datum)
 		std::cout << "Error was thrown" << std::endl;
 		return false;
 	}
+}
+
+
+TEMPLATE
+List_Node<T>* Linked_List<T>::find(T target)
+{
+	//RETURNS: 
+	//	-Node pointer, if element is in list
+	//	-nullptr if element is not
+	List_Node<T>* ptr = head;
+	while (ptr != nullptr) {
+		if (ptr->data == target)
+			return ptr;
+		ptr = ptr->next;
+	}
+	return nullptr;
 }
 
 TEMPLATE
