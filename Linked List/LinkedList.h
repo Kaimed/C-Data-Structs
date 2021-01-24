@@ -3,6 +3,9 @@
 #define LinkedList_h
 #endif
 #include <iostream>
+//THINKING THIS WILL HELP WITH THE ARRAY CONSTRUCTOR
+#include <array>
+
 #define TEMPLATE template <typename T>
 
 TEMPLATE
@@ -19,6 +22,7 @@ TEMPLATE
 class Linked_List {
 protected:
 	List_Node<T>* head;
+	List_Node<T>* tail;
 	List_Node<T>* current;
 	size_t size;
 
@@ -32,7 +36,7 @@ public:
 	List_Node<T>* get_head();
 	List_Node<T>* get_current();
 
-	bool add_node(T datum);
+	bool append(T datum);
 	size_t get_size();
 	void print_list();
 
@@ -61,6 +65,10 @@ Linked_List<T>::Linked_List<T>()
 {
 	this->head = new List_Node<T>();
 	this->current = head;
+	this->tail = head;
+	this->head->next = nullptr;
+	this->current->next = nullptr;
+	this->tail->next = nullptr;
 	this->size = 0;
 }
 
@@ -69,6 +77,15 @@ Linked_List<T>::Linked_List<T>(T datum)
 {
 	this->head = new List_Node<T>(datum);
 	this->current = head;
+	this->tail = head;
+	this->head->next = nullptr;
+	std::cout << this->tail->next << std::endl;
+	std::cout << this->head->next << std::endl;
+	
+	//FAIRLY SURE I CAN JUST IGNORE SETTING THESE SINCE THEY POINT TO HEAD ANYWAY
+	//this->current->next = nullptr;
+	//this->tail->next = nullptr;
+	
 	this->size = 1;
 }
 
@@ -128,18 +145,29 @@ size_t Linked_List<T>::get_size()
 }
 
 TEMPLATE
-bool Linked_List<T>::add_node(T datum)
+bool Linked_List<T>::append(T datum)
 {
 	try {
-		if (this->size == 0)
+		if (this->size == 0) {
 			this->head = new List_Node<T>(datum);
-		else if (this->size == 1)
+			this->current = head;
+			this->tail = head;
+			this->head->next = nullptr;
+		}
+		else if (this->size == 1) {
 			this->head->next = new List_Node<T>(datum);
-		else
-			this->current->next = new List_Node<T>(datum);
+			this->tail = head->next;
+			this->current = tail;
+			this->tail->next = nullptr;
+	
+		}
+		else {
+			this->tail->next = new List_Node<T>(datum);
+			this->tail = this->tail->next;
+			this->tail->next = nullptr;
+			this->current = this->tail;
+		}
 		this->size += 1;
-		this->current = this->current->next;
-		this->current->next = nullptr;
 		return true;
 	}
 
@@ -154,14 +182,25 @@ TEMPLATE
 List_Node<T>* Linked_List<T>::find(T target)
 {
 	//RETURNS: 
-	//	-Node pointer, if element is in list
-	//	-nullptr if element is not
+	//	-Node, if element is in list
+	//	-nullptr is
+
+	//REPLACED 1/24/21 WITH DO WHILE LOOP
+	//while (ptr != nullptr) {
+	//	if (ptr->data == target)
+	//		return ptr;
+	//	ptr = ptr->next;
+	//}
+
 	List_Node<T>* ptr = head;
-	while (ptr != nullptr) {
-		if (ptr->data == target)
+	do {
+		if (ptr->data == target) {
 			return ptr;
-		ptr = ptr->next;
-	}
+		}
+		else {
+			ptr = this->head->next;
+		}
+	} while (ptr != tail);
 	return nullptr;
 }
 
@@ -169,11 +208,17 @@ TEMPLATE
 void Linked_List<T>::print_list()
 {
 	List_Node<T>* ptr = this->head;
-	for (int i = 0; i <= size; i++)
-	{
-		if (ptr != nullptr) {
-			std::cout << "Node " << i << " data: " << ptr->data << std::endl;
-			ptr = ptr->next;
-		}
-	}
+	do {
+		std::cout << "Node: " << ptr->data << std::endl;
+		ptr = ptr->next;
+	} while (ptr != nullptr);
+
+	//REPLACED WITH DO WHILE ON 1/24/21
+	//for (int i = 0; i <= size; i++)
+	//{
+	//	if (ptr != nullptr) {
+	//		std::cout << "Node " << i << " data: " << ptr->data << std::endl;
+	//		ptr = ptr->next;
+	//	}
+	//}
 }

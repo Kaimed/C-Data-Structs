@@ -4,10 +4,10 @@
 int main()
 {
 	Linked_List<int> link_list(12);
-	link_list.add_node(13);
-	link_list.add_node(16);
-	link_list.add_node(13);
-	link_list.add_node(16);
+	link_list.append(13);
+	link_list.append(16);
+	link_list.append(13);
+	link_list.append(16);
 	link_list.print_list();
 
 	int params[5] = { 4, 23, 55, 756, 12 };
@@ -16,7 +16,7 @@ int main()
 	for (int i = 1; i < sizeof(params) / sizeof(int); i++)
 	{
 		try {
-			test_list.add_node(params[i]);
+			test_list.append(params[i]);
 		}
 		catch (...) {
 			std::cout << "Exception was caught reading int array\n";
@@ -32,7 +32,7 @@ int main()
 	for (int i = 1; i <(sizeof(words)/sizeof(std::string)); i++)
 	{
 		try {
-			string_list.add_node(words[i]);
+			string_list.append(words[i]);
 		} 
 		catch (...) {
 			std::cout << "Exception Caught....\n";
