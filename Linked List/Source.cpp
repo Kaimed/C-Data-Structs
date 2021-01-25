@@ -12,6 +12,7 @@ int main()
 
 	int params[5] = { 4, 23, 55, 756, 12 };
 	size_t param_size = 5;
+	//Linked_List<int> arr_test(*params, param_size);
 	Linked_List<int> test_list(params[0]);
 	for (int i = 1; i < sizeof(params) / sizeof(int); i++)
 	{

@@ -29,7 +29,7 @@ protected:
 public:
 	Linked_List<T>();
 	Linked_List<T>(T datum);
-	Linked_List<T>(T *arr, size_t arrSize);
+	Linked_List<T>(T *arr[], size_t arrSize);
 	~Linked_List<T>();
 
 	List_Node<T>* find(T target);
@@ -90,7 +90,7 @@ Linked_List<T>::Linked_List<T>(T datum)
 }
 
 TEMPLATE
-Linked_List<T>::Linked_List<T>(T *arr,size_t arrSize)
+Linked_List<T>::Linked_List<T>(T *arr[],size_t arrSize)
 {
 	this->head = new List_Node<T>(arr[0]);
 	List_Node<T>* ptr = head;
